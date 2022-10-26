@@ -4,13 +4,21 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float _speed = 1;
-    [SerializeField] private Rigidbody _rb;
+    [Range(0.01f,0.5f)]
+    [SerializeField] private float _speed;
+    private CharacterController controller;
+
+    private Vector3 direction;
+
+    private void Start()
+    {
+        controller = GetComponent<CharacterController>();
+    }
 
     private void Update()
     {
-        var dir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        direction = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 
-        _rb.velocity = dir * _speed;
+        controller.Move(direction * _speed);
     }
 }
